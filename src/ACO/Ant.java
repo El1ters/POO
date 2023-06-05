@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 public class Ant {
 
+   //atributos
     private int n_nt;
     private ArrayList<String> curr_path;
     private int curr_node;
     private int next_node;
 
+    //metodos
     public int next_node(curr_node){
         return next_node;
     }
