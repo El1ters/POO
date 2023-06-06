@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graph implements GI {
-    private int n_nodes;
+    protected int n_nodes;
 
     public Graph(int n_nodes){
         this.n_nodes = n_nodes;

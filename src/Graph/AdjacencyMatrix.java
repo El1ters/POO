@@ -1,5 +1,6 @@
 package Graph;
 import java.sql.Array;
+import java.util.Arrays;
 import java.util.Random;
 public class AdjacencyMatrix extends Graph{
     private int[][] matrix;
@@ -10,10 +11,9 @@ public class AdjacencyMatrix extends Graph{
         this.matrix = matrix;
     }
 
-    // Fazer a matriz random
+    //Construtor para a matriz Random
     public AdjacencyMatrix(int n_nodes,int max_weight){
         super(n_nodes);
-
         Random random = new Random();
         int[] cycle = new int[n_nodes];
         for(int i = 0;i < cycle.length;i++){
@@ -21,20 +21,32 @@ public class AdjacencyMatrix extends Graph{
         }
         shuffleNodes(cycle);
         this.matrix = createHamiltonianPath(cycle,max_weight);
+        printMatrix();
+        for (int j : cycle) {
+            System.out.println(j);
+        }
+        //min = n_nodes
+        int max = (n_nodes * (n_nodes - 1)) / 2;
+        int n_edges = random.nextInt(max - n_nodes + 1) + n_nodes; //Número total de arestas
+        int edges_left = n_edges - n_nodes;
+        System.out.println("max: " + max + " min: " + n_nodes + " " + "Random: " +  n_edges);
+    }
+    private void sampleEdgesLeft(int edges_left,int max_weight){
+        Random random = new Random();
+        int size = n_nodes;
+        while (edges_left != 0) {
+
+            edges_left--;
+        }
+
+    }
+    private void printMatrix(){
         for (int[] ints : this.matrix) {
             for (int j = 0; j < this.matrix[0].length; j++) {
                 System.out.print(ints[j] + " ");
             }
             System.out.println();
         }
-        for (int j : cycle) {
-            System.out.println(j);
-        }
-        //min = n_nodes
-        int max = (n_nodes * (n_nodes - 1)) / 2;
-        int edge_weight = random.nextInt(max_weight + 1);
-        int n_edges = random.nextInt(max - n_nodes + 1) + n_nodes;
-        System.out.println("max: " + max + " min: " + n_nodes + " " + "Random: " +  n_edges);
     }
 
     private void shuffleNodes(int[] vec){
@@ -51,6 +63,10 @@ public class AdjacencyMatrix extends Graph{
 
     private int[][] createHamiltonianPath(int[] vec,int maxWeight){
         int[][] matrix = new int[vec.length][vec.length];
+        for(int[] i :matrix){
+            Arrays.fill(i,-1);
+        }
+
         Random random = new Random();
         int first = vec[0];
         int last = vec[vec.length - 1];
