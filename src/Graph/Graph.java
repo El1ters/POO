@@ -1,6 +1,4 @@
 package Graph;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Graph{
@@ -10,5 +8,5 @@ public abstract class Graph{
         this.n_nodes = n_nodes;
     }
     public abstract int getWeight(int n,int edges);
-    public abstract List<int[]> getNeighbours(int i);
+    public abstract List<Integer> getNeighbours(int i);
 }

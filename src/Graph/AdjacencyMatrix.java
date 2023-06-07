@@ -1,6 +1,5 @@
 package Graph;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 public class AdjacencyMatrix extends Graph{
@@ -110,15 +109,13 @@ public class AdjacencyMatrix extends Graph{
     public int getWeight(int node1,int node2){
         return this.matrix[node1 - 1][node2 - 1];
     }
-    public List<int[]> getNeighbours(int node){
-        List<int[]> neighbours = new ArrayList<>();
-        /*for(int i = 0;i < this.matrix[0].length;i++){
-            if(this.matrix[node - 1][i] != -1){
-                neighbours.add(this.matrix[node - 1][i]);
+    public List<Integer> getNeighbours(int node){
+        List<Integer> neighbours = new ArrayList<>();
+        for(int i = 0;i < this.matrix[0].length;i++){
+            if(this.matrix[node - 1][i] != 0){
+                neighbours.add(i + 1);
             }
-        }*/
+        }
         return neighbours;
     }
-
-
 }
