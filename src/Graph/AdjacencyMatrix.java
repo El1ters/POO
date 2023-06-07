@@ -35,10 +35,10 @@ public class AdjacencyMatrix extends Graph{
         Random random = new Random();
         int size = n_nodes; //vai ser utiizado para o random
         while (edges_left != 0) {
-            int weight = random.nextInt(max_weight + 1);
+            int weight = random.nextInt(max_weight) + 1;
             int aux = random.nextInt(size);
             int aux1 = random.nextInt(size);
-            if(this.matrix[aux][aux1] == -1 && aux != aux1){
+            if(this.matrix[aux][aux1] == 0 && aux != aux1){
                 System.out.println((aux+1) + " " + (aux1+1));
                 this.matrix[aux][aux1] = weight;
                 this.matrix[aux1][aux] = weight;
@@ -79,14 +79,10 @@ public class AdjacencyMatrix extends Graph{
 
     private int[][] createHamiltonianPath(int[] vec,int maxWeight){
         int[][] matrix = new int[vec.length][vec.length];
-        for(int[] i :matrix){
-            Arrays.fill(i,-1);
-        }
-
         Random random = new Random();
         int first = vec[0];
         int last = vec[vec.length - 1];
-        int weight = random.nextInt(maxWeight + 1);
+        int weight = random.nextInt(maxWeight) + 1;
         matrix[first - 1][last - 1] = weight;
         matrix[last - 1][first - 1] = weight;
         for(int i = 0; i < vec.length; i++){
@@ -94,7 +90,7 @@ public class AdjacencyMatrix extends Graph{
             //Se existe vizinho à esquerda
             if(i > 0){
                 int neighbour = vec[i - 1];
-                weight = random.nextInt(maxWeight + 1);
+                weight = random.nextInt(maxWeight) + 1;
                 matrix[current - 1][neighbour - 1] = weight;
                 matrix[neighbour - 1][current - 1] = weight;
             }
@@ -102,7 +98,7 @@ public class AdjacencyMatrix extends Graph{
             //Se existe vizinho à direita
             if(i < vec.length - 1){
                 int neighbour = vec[i + 1];
-                weight = random.nextInt(maxWeight + 1);
+                weight = random.nextInt(maxWeight) + 1;
                 matrix[current - 1][neighbour - 1] = weight;
                 matrix[neighbour - 1][current - 1] = weight;
 
@@ -116,11 +112,11 @@ public class AdjacencyMatrix extends Graph{
     }
     public List<int[]> getNeighbours(int node){
         List<int[]> neighbours = new ArrayList<>();
-        for(int i = 0;i < this.matrix[0].length;i++){
+        /*for(int i = 0;i < this.matrix[0].length;i++){
             if(this.matrix[node - 1][i] != -1){
                 neighbours.add(this.matrix[node - 1][i]);
             }
-        }
+        }*/
         return neighbours;
     }
 

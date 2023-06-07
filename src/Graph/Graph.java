@@ -3,7 +3,7 @@ package Graph;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Graph implements GI {
+public abstract class Graph{
     protected int n_nodes;
 
     public Graph(int n_nodes){
