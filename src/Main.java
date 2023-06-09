@@ -16,7 +16,6 @@ public class Main {
             file = new ReadFile(aux);
         }else{
             String[] aux = Arrays.copyOfRange(teste, 4, teste.length);
-            System.out.println(aux[0] +" "+ aux[1] +" "+ aux[2]+" " + aux[3]);
             file = new ReadFile(aux);
         } 
 

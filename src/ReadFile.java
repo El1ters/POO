@@ -28,7 +28,6 @@ public class ReadFile {
     }
 
     public ReadFile(String file){
-        System.out.println("um");
         this.file = file;
     }
 }
