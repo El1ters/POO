@@ -1,3 +1,5 @@
+
+import File.ReadFile;
 import Graph.Graph;
 
 import java.util.Arrays;
@@ -8,17 +10,18 @@ import Graph.AdjacencyMatrix;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        String[] teste =  {"java","-jar","project.jar","-f","4","10","2","1","2","3","50","6","0.5","100","500"};
+        //String[] teste =  {"java","-jar","project.jar","-f","4","10","2","1","2","3","50","6","0.5","100","500"};
+        String[] teste = {"java","-jar","project.jar","-f", "D:/Utilizador/Desktop/teste.txt" };
         ReadFile file;
 
-        if(teste[3].equals("-r")){
+        if(teste[3].equals("-f")){
             String aux = teste[4];
             file = new ReadFile(aux);
         }else{
             String[] aux = Arrays.copyOfRange(teste, 4, teste.length);
             file = new ReadFile(aux);
-        } 
+        }
 
-        Graph r = new AdjacencyMatrix(4,10);
+        Graph r = new AdjacencyMatrix(file);
     }
 }
