@@ -8,7 +8,6 @@ public class OptimizerACO {
 
     //Best best;                              //relação direcional com classe Best
     Graph graph;
-    Ant ant;
     ReadFile file;
     private int colony_size;
     private int nest;
@@ -33,11 +32,11 @@ public class OptimizerACO {
         }*/
         Ant ant = new Ant(1,1, 1, 3,graph,this);
         int next;
-        next = ant.move(file.getNest());
-        next = ant.move(next);
-        next = ant.move(next);
-        next = ant.move(next);
-        next = ant.move(next);
+        ant.update();
+        ant.update();
+        ant.update();
+        ant.update();
+        ant.update();
 
         //init colony
         /*for (int i = 1; i <= n; i++){

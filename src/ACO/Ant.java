@@ -25,7 +25,8 @@ public class Ant {
         this.curr_path.add(aco.getNest());
         this.J = new ArrayList<>();
     }
-    public int move(int curr_node){
+    private void move(){
+        int curr_node = curr_path.get(curr_path.size() - 1);
         //Lista dos vizinhos
         List<Integer> neighbour = graph.getNeighbours(curr_node);
         float ci;
@@ -35,25 +36,32 @@ public class Ant {
             next = uniformDist(neighbour);
             System.out.println("escolhido: " + next);
             this.curr_path.add(next);
-            updatePath(next);
-            return next;
         }else{
-            System.out.println("Ci: " + ci);
-            //printCijk();
             List<float[]> P = getP(ci);//primeiro elemento é o nó destino e o segundo é prob comulativa
-            printP(P);
+            //printP(P);
             int next = next_node(P);
             System.out.println("Escolhido: " + next);
             this.curr_path.add(next);
-            return next;
         }
+    }
+    public float update(){
+        move();
+        //Chamar deteta hamilton
+        printPath();
+        updatePath();
+        printPath();
+        //int curr_node = curr_path.get(curr_path.size() - 1);
+        //int last_seen = curr_path.get(curr_path.size() - 2);
+        //return calcTime(this.delta,graph.getWeight(last_seen,curr_node));
+        return 0;
     }
     public float calcTime(float delta,int weight){
         float mean = delta * weight;
         Random random = new Random();
-        return (float) (-mean * Math.log(1-random.nextFloat()));
+        return (float) (-mean * Math.log(1 - random.nextFloat()));
     }
-    private void updatePath(int next){
+    private void updatePath(){
+        int next = curr_path.get(curr_path.size() - 1);
         int first = curr_path.indexOf(next);
         int last = curr_path.lastIndexOf(next);
         if (first != -1 && last != -1) {
@@ -61,10 +69,8 @@ public class Ant {
         }
     }
     private int next_node(List<float[]> P){
-        int chosen;
         Random random = new Random();
         float prob = random.nextFloat();
-        System.out.println("calhas: " + prob);
         for(float[] i : P){
             if(prob < i[1])
                 return (int) i[0];
@@ -76,7 +82,7 @@ public class Ant {
         //Escolher um indice random para percorrer a lista e escolher um
         int i = random.nextInt(neighbour.size());
         int aux = 0;
-        for(int next:neighbour){
+        for(int next : neighbour){
             System.out.println("no: " + next);
             if(aux == i)
                 return next;
