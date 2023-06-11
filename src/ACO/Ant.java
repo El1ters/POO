@@ -1,8 +1,6 @@
 package ACO;
 import Graph.Graph;
 
-import java.security.cert.TrustAnchor;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,14 +28,15 @@ public class Ant {
         //Lista dos vizinhos
         List<Integer> neighbour = graph.getNeighbours(curr_node);
         float ci;
-        ci = getJ(neighbour,curr_node);//primeiro elemento é o no destino e o segundo é o cijk
-        //System.out.println(ci);
+        ci = getJ(neighbour,curr_node);//primeiro elemento é o no destino e o segundo é o Cijk
+        //System.out.println("Ci: " + ci);
         //printCijk();
-        List<float[]> P = getP(ci);
+        List<float[]> P = getP(ci);//primeiro elemento é o nó destino e o segundo é prob comulativa
         printP(P);
         int next = next_node(P);
-        System.out.println(next);
-        return 0;
+        System.out.println("Escolhido: " + next);
+        this.curr_path.add(next);
+        return next;
     }
     private int next_node(List<float[]> P){
         int chosen;
@@ -53,14 +52,12 @@ public class Ant {
     private List<float[]> getP(float ci){
         List<float[]> P = new ArrayList<>();
         float ptotal,Pijk;
-        int k = 0;
         float aux = 0;
         for(float[] i: J){
             Pijk = i[1] / ci;
             ptotal = i[1] / ci + aux;
             aux += i[1] / ci;
             P.add(new float[]{i[0],ptotal});
-            System.out.println(Pijk);
         }
         return P;
     }
