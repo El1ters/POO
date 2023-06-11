@@ -26,30 +26,43 @@ public class Ant {
         this.curr_path.add(aco.getNest());
         this.J = new ArrayList<>();
     }
-
     public int move(int curr_node){
         //Lista dos vizinhos
         List<Integer> neighbour = graph.getNeighbours(curr_node);
         float ci;
         ci = getJ(neighbour,curr_node);//primeiro elemento é o no destino e o segundo é o cijk
-        System.out.println(ci);
-        printCijk();
-        float[] Pijk = getPijk(ci);
-        Random random = new Random();
-        float prob = random.nextFloat();
+        //System.out.println(ci);
+        //printCijk();
+        List<float[]> P = getP(ci);
+        printP(P);
+        int next = next_node(P);
+        System.out.println(next);
         return 0;
     }
-    private float[] getPijk(float ci){
-        float[] Pijk = new float[J.size()];
+    private int next_node(List<float[]> P){
+        int chosen;
+        Random random = new Random();
+        float prob = random.nextFloat();
+        System.out.println("calhas: " + prob);
+        for(float[] i : P){
+            if(prob < i[1])
+                return (int) i[0];
+        }
+        return 0;
+    }
+    private List<float[]> getP(float ci){
+        List<float[]> P = new ArrayList<>();
+        float ptotal,Pijk;
         int k = 0;
         float aux = 0;
         for(float[] i: J){
-            Pijk[k] = i[1] / ci + aux;
+            Pijk = i[1] / ci;
+            ptotal = i[1] / ci + aux;
             aux += i[1] / ci;
-            System.out.println("Pijk: " + Pijk[k]);
-            System.out.println("p: " + i[1]/ci);
+            P.add(new float[]{i[0],ptotal});
+            System.out.println(Pijk);
         }
-        return Pijk;
+        return P;
     }
     private float getJ(List<Integer> neighbour,int curr_node){
         this.J.clear();
@@ -71,6 +84,16 @@ public class Ant {
             isFirst = true;
             for (float value : k) {
                 System.out.println(isFirst ? "nó: " + value: "Cijk: " + value);
+                isFirst = false;
+            }
+        }
+    }
+    private void printP(List<float[]> P){
+        boolean isFirst;
+        for(float[] k : P) {
+            isFirst = true;
+            for (float value : k) {
+                System.out.println(isFirst ? "nó: " + value: "P: " + value);
                 isFirst = false;
             }
         }
