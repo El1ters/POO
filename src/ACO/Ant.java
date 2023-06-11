@@ -29,14 +29,35 @@ public class Ant {
         List<Integer> neighbour = graph.getNeighbours(curr_node);
         float ci;
         ci = getJ(neighbour,curr_node);//primeiro elemento é o no destino e o segundo é o Cijk
-        //System.out.println("Ci: " + ci);
-        //printCijk();
-        List<float[]> P = getP(ci);//primeiro elemento é o nó destino e o segundo é prob comulativa
-        printP(P);
-        int next = next_node(P);
-        System.out.println("Escolhido: " + next);
-        this.curr_path.add(next);
-        return next;
+        if(ci == 0){
+            int next;
+            next = uniformDist(neighbour);
+            System.out.println("escolhido: " + next);
+            this.curr_path.add(next);
+            updatePath(next);
+            return next;
+        }else{
+            System.out.println("Ci: " + ci);
+            //printCijk();
+            List<float[]> P = getP(ci);//primeiro elemento é o nó destino e o segundo é prob comulativa
+            printP(P);
+            int next = next_node(P);
+            System.out.println("Escolhido: " + next);
+            this.curr_path.add(next);
+            return next;
+        }
+    }
+    private void updatePath(int next){
+        int first = curr_path.indexOf(next);
+        int last = curr_path.lastIndexOf(next);
+        if (first != -1 && last != -1) {
+            curr_path.subList(first, last).clear();
+        }
+    }
+    private void printPath(){
+        for(int i : this.curr_path)
+            System.out.print(i+"-");
+        System.out.println();
     }
     private int next_node(List<float[]> P){
         int chosen;
@@ -46,6 +67,19 @@ public class Ant {
         for(float[] i : P){
             if(prob < i[1])
                 return (int) i[0];
+        }
+        return 0;
+    }
+    private int uniformDist(List<Integer> neighbour){
+        Random random = new Random();
+        //Escolher um indice random para percorrer a lista e escolher um
+        int i = random.nextInt(neighbour.size());
+        int aux = 0;
+        for(int next:neighbour){
+            System.out.println("no: " + next);
+            if(aux == i)
+                return next;
+            aux++;
         }
         return 0;
     }

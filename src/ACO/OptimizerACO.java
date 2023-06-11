@@ -35,6 +35,10 @@ public class OptimizerACO {
         int next;
         next = ant.move(file.getNest());
         next = ant.move(next);
+        next = ant.move(next);
+        next = ant.move(next);
+        next = ant.move(next);
+
         //init colony
         /*for (int i = 1; i <= n; i++){
             Ant ant = new Ant(i,alpha, beta, delta,graph,this);
