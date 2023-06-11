@@ -47,17 +47,15 @@ public class Ant {
             return next;
         }
     }
+    /*public float calcTime(float delta,int weight){
+        float mean = delta * weight;
+    }*/
     private void updatePath(int next){
         int first = curr_path.indexOf(next);
         int last = curr_path.lastIndexOf(next);
         if (first != -1 && last != -1) {
             curr_path.subList(first, last).clear();
         }
-    }
-    private void printPath(){
-        for(int i : this.curr_path)
-            System.out.print(i+"-");
-        System.out.println();
     }
     private int next_node(List<float[]> P){
         int chosen;
@@ -109,7 +107,7 @@ public class Ant {
         }
         return ci;
     }
-    private void printCijk(){
+    private void printCijk(){ //Dar print dos Cijk associados aos caminhos
         boolean isFirst;
         for(float[] k : this.J) {
             isFirst = true;
@@ -119,7 +117,12 @@ public class Ant {
             }
         }
     }
-    private void printP(List<float[]> P){
+    private void printPath(){
+        for(int i : this.curr_path)
+            System.out.print(i+"-");
+        System.out.println();
+    }
+    private void printP(List<float[]> P){ //Dar print das prob comulativas
         boolean isFirst;
         for(float[] k : P) {
             isFirst = true;
