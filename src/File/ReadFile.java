@@ -49,15 +49,6 @@ public class ReadFile {
         sampleEdgesLeft(edges_left,this.weight);
         System.out.println("max: " + max + " min: " + n_nodes + " " + "n_edges: " +  n_edges);
     }
-    private void printCycle(int [] cycle){
-        for (int j = 0 ; j < cycle.length;j++) {
-            System.out.print(cycle[j]);
-            if (j != cycle.length - 1)
-                System.out.print("-");
-        }
-        System.out.println();
-    }
-
     //construtor para gerar a matriz pelo ficheiro
     public ReadFile(String file){
         try {
@@ -94,7 +85,14 @@ public class ReadFile {
             e.printStackTrace();
         }
     }
-
+    private void printCycle(int [] cycle){
+        for (int j = 0 ; j < cycle.length;j++) {
+            System.out.print(cycle[j]);
+            if (j != cycle.length - 1)
+                System.out.print("-");
+        }
+        System.out.println();
+    }
     private void shuffleNodes(int[] vec){
         // Shuffle the array
         Random random = new Random();
@@ -150,11 +148,15 @@ public class ReadFile {
             }
         }
     }
-
     public int getNodes(){
         return this.n_nodes;
     }
-
+    public int getColony_size(){
+        return this.colony_size;
+    }
+    public int getNest(){
+        return this.nest;
+    }
     public int[][] getMatrix(){
         return this.matrix;
     }
