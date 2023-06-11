@@ -1,4 +1,5 @@
 package ACO;
+import File.ReadFile;
 import Graph.Graph;
 
 import java.util.ArrayList;
@@ -47,9 +48,11 @@ public class Ant {
             return next;
         }
     }
-    /*public float calcTime(float delta,int weight){
+    public float calcTime(float delta,int weight){
         float mean = delta * weight;
-    }*/
+        Random random = new Random();
+        return (float) (-mean * Math.log(1-random.nextFloat()));
+    }
     private void updatePath(int next){
         int first = curr_path.indexOf(next);
         int last = curr_path.lastIndexOf(next);
