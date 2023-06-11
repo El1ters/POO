@@ -18,8 +18,6 @@ public class ReadFile {
     private int colony_size; //ν
     private int[][] matrix;
     private Float final_instant; //τ
-
-
     //Construtor para gerar a matriz random
     public ReadFile(String[] args){
         this.n_nodes = Integer.parseInt(args[0]);
