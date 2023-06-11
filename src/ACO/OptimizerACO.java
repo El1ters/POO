@@ -1,11 +1,15 @@
 package ACO;
+
 import java.util.ArrayList;
+
+import File.ReadFile;
 import Graph.Graph;
 public class OptimizerACO {
 
     //Best best;                              //relação direcional com classe Best
     Graph graph;
     Ant ant;
+    ReadFile file;
     private int colony_size;
     private int nest;
     //private ArrayList<Pheromone> pheromones;
@@ -15,9 +19,10 @@ public class OptimizerACO {
     private float eta;
 
     //metodos
-    public int OptimizerACO(int n, int alpha, int beta, int delta, int gama, int rho, int eta,int nest){
-        this.colony_size = n;
-        this.nest = nest;
+    public OptimizerACO(ReadFile file,Graph graph){
+        this.colony_size = file.getColony_size();
+        this.nest = file.getNest();
+        this.graph = graph;
         //init pheromones
         /*for (Pheromone edge: pheromones) {
             if(graph.get_edge(i,j)!=-1){
@@ -26,13 +31,13 @@ public class OptimizerACO {
                 edge.ph=0;
             };
         }*/
-        Ant ant = new Ant(1,1, 2, 3,graph,this);
+        Ant ant = new Ant(1,1, 1, 3,graph,this);
+        ant.move(file.getNest());
         //init colony
         /*for (int i = 1; i <= n; i++){
             Ant ant = new Ant(i,alpha, beta, delta,graph,this);
             colony.add(ant);
         }*/
-        return 0;
     }
 
 
