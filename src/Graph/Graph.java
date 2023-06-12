@@ -3,6 +3,7 @@ import java.util.List;
 
 public abstract class Graph{
     protected int n_nodes;
+
     public Graph(int n_nodes){
         this.n_nodes = n_nodes;
     }

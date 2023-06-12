@@ -47,6 +47,7 @@ public class AdjacencyMatrix extends Graph{
         this.n_edges /= 2;
         this.max_weight /= 2;
     }
+
     public int getEdges(){
         return this.n_edges;
     }
@@ -54,3 +55,4 @@ public class AdjacencyMatrix extends Graph{
         return this.max_weight;
     }
 }
+
