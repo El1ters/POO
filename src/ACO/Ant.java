@@ -120,7 +120,7 @@ public class Ant {
         //Percorrer a lista ver se a formiga já passou por esse nó e adicionar à lista de nos nao percorridos
         for(Integer i : neighbour){
             if(!curr_path.contains(i)){
-                cijk = (this.alpha/*+pheromone_level*/) / (this.beta + graph.getWeight(curr_node,i));
+                cijk = (this.alpha/*+get_pheromones()*/) / (this.beta + graph.getWeight(curr_node,i));
                 J.add(new float[]{i,cijk});
                 ci += cijk;
             }
@@ -151,12 +151,5 @@ public class Ant {
                 isFirst = false;
             }
         }
-    }
-    private float ciCalculate(List<float[]> to_travel){
-        float ci = 0;
-        for(float[] j : to_travel) {
-            ci += j[1];
-        }
-        return ci;
     }
 }
