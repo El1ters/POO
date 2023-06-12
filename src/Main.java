@@ -1,4 +1,5 @@
 
+import ACO.OptimizerACO;
 import File.ReadFile;
 import Graph.Graph;
 
@@ -10,8 +11,8 @@ import Graph.AdjacencyMatrix;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        //String[] teste =  {"java","-jar","project.jar","-f","4","10","2","1","2","3","50","6","0.5","100","500"};
-        String[] teste = {"java","-jar","project.jar","-f", "D:/Utilizador/Desktop/teste.txt" };
+        String[] teste =  {"java","-jar","project.jar","-r","5","10","2","1","2","3","50","6","0.5","100","500"};
+        //String[] teste = {"java","-jar","project.jar","-f", "D:/Utilizador/Desktop/teste.txt" };
         ReadFile file;
 
         if(teste[3].equals("-f")){
@@ -23,5 +24,6 @@ public class Main {
         }
 
         Graph r = new AdjacencyMatrix(file);
+        OptimizerACO f = new OptimizerACO(file,r);
     }
 }
