@@ -31,6 +31,8 @@ public class Ant {
         List<Integer> neighbour = graph.getNeighbours(curr_node);
         float ci;
         ci = getJ(neighbour,curr_node);//primeiro elemento é o no destino e o segundo é o Cijk
+        //System.out.println("Ci:" + ci);
+        //printCijk();
         if(ci == 0){
             int next;
             next = uniformDist(neighbour);
@@ -47,13 +49,19 @@ public class Ant {
     public float update(){
         move();
         //Chamar deteta hamilton
+        System.out.println(hamiltonDetection());
         printPath();
         updatePath();
         printPath();
+
         //int curr_node = curr_path.get(curr_path.size() - 1);
         //int last_seen = curr_path.get(curr_path.size() - 2);
         //return calcTime(this.delta,graph.getWeight(last_seen,curr_node));
         return 0;
+    }
+    private int hamiltonDetection(){
+        int nest = curr_path.get(curr_path.size() - 1);
+        return (curr_path.size() == aco.getNodes() + 1 && nest == aco.getNest()) ? 1:0;
     }
     public float calcTime(float delta,int weight){
         float mean = delta * weight;
@@ -83,7 +91,7 @@ public class Ant {
         int i = random.nextInt(neighbour.size());
         int aux = 0;
         for(int next : neighbour){
-            System.out.println("no: " + next);
+            //System.out.println("no: " + next);
             if(aux == i)
                 return next;
             aux++;
@@ -98,6 +106,7 @@ public class Ant {
             Pijk = i[1] / ci;
             ptotal = i[1] / ci + aux;
             aux += i[1] / ci;
+            //System.out.println("Pijk:"+Pijk);
             P.add(new float[]{i[0],ptotal});
         }
         return P;

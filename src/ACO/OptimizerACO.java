@@ -22,6 +22,7 @@ public class OptimizerACO {
         this.colony_size = file.getColony_size();
         this.nest = file.getNest();
         this.graph = graph;
+        this.file = file;
         //init pheromones
         /*for (Pheromone edge: pheromones) {
             if(graph.get_edge(i,j)!=-1){
@@ -53,6 +54,9 @@ public class OptimizerACO {
     /*public void get_pheromones(pheromones){
 
     }*/
+    public int getNodes(){
+        return this.file.getNodes();
+    }
     public int getNest(){
         return this.nest;
     }
