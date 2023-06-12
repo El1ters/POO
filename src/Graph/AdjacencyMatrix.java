@@ -5,7 +5,7 @@ import java.util.Random;
 import File.ReadFile;
 public class AdjacencyMatrix extends Graph{
     private final int[][] matrix;
-    private int n_edges;
+    private int n_edges = 0;
     private int max_weight = 0;
     ReadFile read;
     public AdjacencyMatrix(ReadFile read){
