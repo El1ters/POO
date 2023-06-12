@@ -158,5 +158,8 @@ public class ReadFile {
     public int[][] getMatrix(){
         return this.matrix;
     }
+    public float getAlpha(){
+        return this.alpha;
+    }
 }
 

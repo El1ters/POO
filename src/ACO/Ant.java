@@ -49,15 +49,17 @@ public class Ant {
     public float update(){
         move();
         //Chamar deteta hamilton
-        System.out.println(hamiltonDetection());
+        if(hamiltonDetection() == 1){
+            System.out.println("Hamiltoniano");
+            //aco.ProcessPath(curr_path);
+        }
         printPath();
+        int curr_node = curr_path.get(curr_path.size() - 1);
+        int last_seen = curr_path.get(curr_path.size() - 2);
+        float time = calcTime(this.delta,graph.getWeight(last_seen,curr_node));
         updatePath();
         printPath();
-
-        //int curr_node = curr_path.get(curr_path.size() - 1);
-        //int last_seen = curr_path.get(curr_path.size() - 2);
-        //return calcTime(this.delta,graph.getWeight(last_seen,curr_node));
-        return 0;
+        return time;
     }
     private int hamiltonDetection(){
         int nest = curr_path.get(curr_path.size() - 1);
