@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class ReadFile {
+    private static ReadFile instance;
     private int n_nodes;
     private int weight;
     private int nest;
@@ -17,9 +18,18 @@ public class ReadFile {
     private float gama; //γ
     private int colony_size; //ν
     private int[][] matrix;
+    private ReadFile(){
+
+    }
+    public static ReadFile getInstance(){
+        if (instance == null) {
+            instance = new ReadFile();
+        }
+        return instance;
+    }
     private Float final_instant; //τ
     //Construtor para gerar a matriz random
-    public ReadFile(String[] args){
+    public void setData(String[] args){
         this.n_nodes = Integer.parseInt(args[0]);
         this.weight = Integer.parseInt(args[1]);
         this.nest = Integer.parseInt(args[2]);
@@ -48,7 +58,7 @@ public class ReadFile {
         System.out.println("max: " + max + " min: " + n_nodes + " " + "n_edges: " +  n_edges);
     }
     //construtor para gerar a matriz pelo ficheiro
-    public ReadFile(String file){
+    public void setData(String file){
         try {
             File myObj = new File(file);
             Scanner myReader = new Scanner(myObj);
@@ -157,9 +167,6 @@ public class ReadFile {
     }
     public int[][] getMatrix(){
         return this.matrix;
-    }
-    public float getAlpha(){
-        return this.alpha;
     }
 }
 
