@@ -5,15 +5,12 @@ import java.util.Random;
 import File.ReadFile;
 public class AdjacencyMatrix extends Graph{
     private final int[][] matrix;
-    private int n_edges = 0;
-    private int max_weight = 0;
     ReadFile read;
     public AdjacencyMatrix(ReadFile read){
         super(read.getNodes());
         this.read = read;
         this.matrix = read.getMatrix();
         getGraphWeight();
-        System.out.println("start: "+max_weight + " " + n_edges);
         printMatrix();
     }
     private void printMatrix(){
@@ -46,6 +43,7 @@ public class AdjacencyMatrix extends Graph{
         }
         this.n_edges /= 2;
         this.max_weight /= 2;
+        setAttributes(n_edges,max_weight);
     }
 
     public int getEdges(){
