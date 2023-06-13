@@ -6,11 +6,11 @@ public class PEC {
 
     //metodos
     private Event push(){
-
-    };
+        return null;
+    }
 
     private Event pop(){
-
-    };
+        return null;
+    }
 
 }

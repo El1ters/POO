@@ -6,12 +6,10 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.Random;
-
 import File.ReadFile;
 import Graph.Graph;
 import Simulation.Sim;
 import Simulation.Event;
-
 
 public class OptimizerACO{
     //atributes
@@ -43,10 +41,10 @@ public class OptimizerACO{
         * ALTERAR DPS
         * ALTERAR DPS
         * */
-        for (int i = 0; i < file.getNodes(); i++) {
-            for(int j = 0; j < file.getNodes(); j++) {
+        for (int i = 1; i <= file.getNodes(); i++) {
+            for(int j = i; j <= file.getNodes(); j++) {
                 if(i != j) {
-                    if(graph.getWeight(i,j)!=0){
+                    if(graph.getWeight(i,j) != 0){
                         Pheromone edge = new Pheromone(this, i, j, 0);
                         pheromones.add(edge);
                     }
@@ -70,19 +68,16 @@ public class OptimizerACO{
             colony.add(ant);
         }
     }
-
-
-    public int update() {
+    public float update() {
         get_edge(i, j);
         update_pheromones(0, edge);
-        return calcTime(this.eta);
+        return calcTime();
     }
 
 
-    public float calcTime(float eta){
-        float mean = eta * weight;
+    public float calcTime(){
         Random random = new Random();
-        return (float) (-mean * Math.log(1 - random.nextFloat()));
+        return (float) (-this.eta * Math.log(1 - random.nextFloat()));
     }
 
 
@@ -129,7 +124,6 @@ public class OptimizerACO{
             int x = (Integer)itr.next();
             path_sumw += graph.getWeight(itr, x);
         }
-
         this.update_pheromones(1, path_sum);
 
         //compare with stored solutions
@@ -164,7 +158,6 @@ public class OptimizerACO{
     public float get_pheromone(int i, int j) {
         return get_edge(i, j).get_ph();
     }
-
     public int get_n_edges() {
         return graph.getEdges();
     }
