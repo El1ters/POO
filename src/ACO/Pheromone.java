@@ -1,11 +1,14 @@
 package ACO;
+
+
+
 public class Pheromone {
-    private OptimizerACO aco;
+    OptimizerACO aco;
     private int i;
     private int j;
     private int ph;
 
-    public void Pheromone(OptimizerACO aco, int i, int j, int ph) {
+    public Pheromone(OptimizerACO aco, int i, int j, int ph) {
         this.aco=aco;
         this.i=i;
         this.j=j;
@@ -17,7 +20,10 @@ public class Pheromone {
     }
 
     public int is_edge(int i, int j) {
-        if((i == this.i && j == this.j) && (i == this.i && j == this.j))return 1;
+        if((i == this.i && j == this.j) && (i == this.j && j == this.i)) {
+            return 1;
+        }
+        return 0;
     }
 
     public void add(int amount){

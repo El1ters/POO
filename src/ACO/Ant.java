@@ -15,7 +15,7 @@ public class Ant {
     private float alpha;
     private float beta;
     private float delta;
-    public Ant(int index,int a,int b,int d,Graph graph,OptimizerACO aco){
+    public Ant(int index,float a,float b,float d,Graph graph,OptimizerACO aco){
         this.n_ant = index;
         this.alpha = a;
         this.beta = b;

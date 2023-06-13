@@ -165,6 +165,15 @@ public class ReadFile {
     public int getNest(){
         return this.nest;
     }
+    public float getAlpha(){
+        return this.alpha;
+    }
+    public float getBeta(){
+        return  this.beta;
+    }
+    public float getDelta(){
+        return  this.delta;
+    }
     public int[][] getMatrix(){
         return this.matrix;
     }

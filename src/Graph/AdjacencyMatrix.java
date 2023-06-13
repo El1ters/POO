@@ -45,12 +45,5 @@ public class AdjacencyMatrix extends Graph{
         this.max_weight /= 2;
         setAttributes(n_edges,max_weight);
     }
-
-    public int getEdges(){
-        return this.n_edges;
-    }
-    public int getSumWeight(){
-        return this.max_weight;
-    }
 }
 

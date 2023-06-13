@@ -1,20 +1,17 @@
 package Simulation;
-import java.util.Arrays;
-import java.util.ArrayList;
 
-public class AntMove{
+import ACO.Ant;
 
-    AntMove extends Event;
+public class AntMove extends Event{
 
-    //metodos
-    private int Ant_move(int; Ant){
+    Ant ant;
 
+    public AntMove(int ts, Ant ant, Sim sim){
+        super(ts, sim);
+        this.ant = ant;
     }
-
-    private int realize(){
-
+    public float trigger() {
+        sim.m_increase();
+        return super.get_time_stamp() + ant.update();
     }
-
 }
-
-

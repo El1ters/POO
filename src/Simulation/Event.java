@@ -1,21 +1,26 @@
 package Simulation;
-import java.util.Arrays;
-import java.util.ArrayList;
 
-public class Event {
 
+public abstract class Event{
     //atributos
-    private int time_stamp;
+    Sim sim;
+    private float time_stamp;
 
     //metodos
-    public Event (time_stamp){
+    public Event (int ts, Sim sim){
+        time_stamp = ts;
+//    	this.update = update;
     }
 
-    protected int realize(){
+    public abstract int trigger();
 
+
+    public float get_time_stamp(){
+        return time_stamp;
     }
 
-    public int get_time_stamp(){
-        return this.time_stamp;
+    public void update_time_stamp(int ts) {
+        this.time_stamp=ts;
+        return;
     }
 }

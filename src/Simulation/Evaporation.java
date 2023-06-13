@@ -1,15 +1,23 @@
 package Simulation;
-import java.util.Arrays;
-import java.util.ArrayList;
+import ACO.Pheromone;
 
-public class Evaporation {
+public class Evaporation extends Event{
 
-    Evaporation extends Event;
+    Pheromone edge;
 
-    //metodos
-    private void Evaporation{};
+    public Evaporation(int ts, Pheromone edge, Sim sim) {
+        super(ts, sim);
+        this.edge = edge;
+    }
 
-    private int realize(){
+    public float trigger() {
+        sim.e_increase();
+        if (edge.get_ph() == 0) return;
+        else {
+            return super.get_time_stamp() + edge.update();
+        }
 
     }
+
+
 }
