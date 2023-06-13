@@ -7,9 +7,9 @@ import java.util.Random;
 
 public class ReadFile {
     private static ReadFile instance;
-    private int n_nodes;
-    private int weight;
-    private int nest;
+    private int n_nodes; //Quantidade de nós existente
+    private int weight; //Atributo relativo à matriz random, diz o peso max de uma edge
+    private int nest; // Qual o nó que é o nest
     private float alpha; // α
     private float delta; // δ
     private float beta; //β

@@ -13,7 +13,6 @@ public abstract class Graph{
     }
     public abstract int getWeight(int n,int edges);
     public abstract List<Integer> getNeighbours(int i);
-
     protected void setAttributes(int n_edges,int max_weight){
         this.max_weight = max_weight;
         this.n_edges = n_edges;

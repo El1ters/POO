@@ -28,7 +28,7 @@ public class Sim  implements Comparator<Event>{
 
     public int Sim(int final_inst, ACO_) {
         this.final_instant = final_inst;
-        int size_queue = ACO_.get_colony_size() + ACO.get_n_edges;
+        int size_queue = ACO_.get_colony_size() + ACO_.get_n_edges();
         PEC = new PriorityQueue<Event>(size_queue, comparator);
     }
 

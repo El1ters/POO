@@ -9,14 +9,14 @@ import java.util.Random;
 public class Ant {
     Graph graph;
     OptimizerACO aco;
-    private int n_ant;
+    private int ID;
     private List<Integer> curr_path = new ArrayList<>();
     private List<float[]> J;
     private float alpha;
     private float beta;
     private float delta;
     public Ant(int index,float a,float b,float d,Graph graph,OptimizerACO aco){
-        this.n_ant = index;
+        this.ID = index;
         this.alpha = a;
         this.beta = b;
         this.delta = d;
@@ -45,21 +45,6 @@ public class Ant {
             System.out.println("Escolhido: " + next);
             this.curr_path.add(next);
         }
-    }
-    public float update(){
-        move();
-        //Chamar deteta hamilton
-        if(hamiltonDetection() == 1){
-            System.out.println("Hamiltoniano");
-            //aco.ProcessPath(curr_path);
-        }
-        printPath();
-        int curr_node = curr_path.get(curr_path.size() - 1);
-        int last_seen = curr_path.get(curr_path.size() - 2);
-        float time = calcTime(this.delta,graph.getWeight(last_seen,curr_node));
-        updatePath();
-        printPath();
-        return time;
     }
     private int hamiltonDetection(){
         int nest = curr_path.get(curr_path.size() - 1);
@@ -151,5 +136,23 @@ public class Ant {
                 isFirst = false;
             }
         }
+    }
+    public float update(){
+        move();
+        //Chamar deteta hamilton
+        if(hamiltonDetection() == 1){
+            System.out.println("Hamiltoniano");
+            //aco.ProcessPath(curr_path);
+        }
+        printPath();
+        int curr_node = curr_path.get(curr_path.size() - 1);
+        int last_seen = curr_path.get(curr_path.size() - 2);
+        float time = calcTime(this.delta,graph.getWeight(last_seen,curr_node));
+        updatePath();
+        printPath();
+        return time;
+    }
+    public int getAntID(){
+        return this.ID;
     }
 }

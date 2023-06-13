@@ -28,7 +28,6 @@ public class OptimizerACO{
     private float rho;
     private float eta;
 
-
     //metodos
     public OptimizerACO(ReadFile file, Graph graph){
         this.colony_size = file.getColony_size();
@@ -37,8 +36,15 @@ public class OptimizerACO{
         this.file = file;
 
         //init pheromones (rever metodo)
-        for (int i = 0; i < graph.get_size(); i++) {
-            for(int j = 0; j < graph.get_size(); j++) {
+        /*ALTERAR DPS
+        * ALTERAR DPS
+        * ALTERAR DPS
+        * ALTERAR DPS
+        * ALTERAR DPS
+        * ALTERAR DPS
+        * */
+        for (int i = 0; i < file.getNodes(); i++) {
+            for(int j = 0; j < file.getNodes(); j++) {
                 if(i != j) {
                     if(graph.getWeight(i,j)!=0){
                         Pheromone edge = new Pheromone(this, i, j, 0);
@@ -69,7 +75,7 @@ public class OptimizerACO{
     public int update() {
         get_edge(i, j);
         update_pheromones(0, edge);
-        return calc_time(this.eta);
+        return calcTime(this.eta);
     }
 
 
@@ -159,7 +165,6 @@ public class OptimizerACO{
         return get_edge(i, j).get_ph();
     }
 
-
     public int get_n_edges() {
         return graph.getEdges();
     }
@@ -180,7 +185,7 @@ public class OptimizerACO{
 
     public Ant get_ant(int a){
         for (Ant ant : colony) {
-            if(ant.get_ant_id() == a) return ant;
+            if(ant.getAntID() == a) return ant;
         }
         return null;
     }

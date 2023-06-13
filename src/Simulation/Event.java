@@ -12,7 +12,7 @@ public abstract class Event{
 //    	this.update = update;
     }
 
-    public abstract int trigger();
+    public abstract float trigger();
 
 
     public float get_time_stamp(){
