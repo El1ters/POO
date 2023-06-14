@@ -115,7 +115,16 @@ public class OptimizerACO{
             }
         }*/
     }
-	public PriorityQueue<OptimizerSolution> remove_tail(PriorityQueue<OptimizerSolution> queue) {
+    private boolean isNewPath(ArrayList<Integer> path){
+        for(OptimizerSolution i:Best_paths){
+            ArrayList<Integer> aux = i.get_path();
+            if(aux.equals(path)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public PriorityQueue<OptimizerSolution> remove_tail(PriorityQueue<OptimizerSolution> queue) {
 		//ver como criar para tipo generico
 		int counter = 0;
 		Iterator<OptimizerSolution> itr = queue.iterator();
