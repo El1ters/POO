@@ -144,6 +144,7 @@ public class ReadFile {
             if(i > 0){
                 int neighbour = vec[i - 1];
                 weight = random.nextInt(maxWeight) + 1;
+                //Atribuirpeso à aresta entre o nó e o seu vizinho da esquerda
                 matrix[current - 1][neighbour - 1] = weight;
                 matrix[neighbour - 1][current - 1] = weight;
             }
@@ -152,6 +153,7 @@ public class ReadFile {
             if(i < vec.length - 1){
                 int neighbour = vec[i + 1];
                 weight = random.nextInt(maxWeight) + 1;
+                //Atribuirpeso à aresta entre o nó e o seu vizinho da direita
                 matrix[current - 1][neighbour - 1] = weight;
                 matrix[neighbour - 1][current - 1] = weight;
 
