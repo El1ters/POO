@@ -1,12 +1,9 @@
 package ACO;
-
-
-
 public class Pheromone {
     OptimizerACO aco;
     private int i;
     private int j;
-    private int ph;
+    private float ph;
 
     public Pheromone(OptimizerACO aco, int i, int j, int ph) {
         this.aco=aco;
@@ -15,22 +12,26 @@ public class Pheromone {
         this.ph=ph;
     }
 
-    public int get_ph() {
+    public float get_ph() {
         return this.ph;
     }
 
-    public int is_edge(int i, int j) {
-        if((i == this.i && j == this.j) && (i == this.j && j == this.i)) {
-            return 1;
-        }
-        return 0;
+    public boolean is_edge(int i, int j) {
+        return (i == this.i && j == this.j) || (i == this.j && j == this.i);
     }
 
-    public void add(int amount){
+    public void addPH(float amount){
         this.ph = this.ph + amount;
     }
 
-    public void evaporate(int amount) {
+    public float update() {
+    	//evaporate pheromones
+    	float amount = aco.get_rho();
         this.ph = this.ph - amount;
+        if(this.ph <= 0){
+        	this.ph = 0;
+          	return -1;
+        }
+        return	aco.calcTime();
     }
 }

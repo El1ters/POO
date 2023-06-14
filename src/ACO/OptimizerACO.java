@@ -1,6 +1,5 @@
 package ACO;
 
-import java.util.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.PriorityQueue;
@@ -9,22 +8,22 @@ import java.util.Random;
 import File.ReadFile;
 import Graph.Graph;
 import Simulation.Sim;
-import Simulation.Event;
+
 
 public class OptimizerACO{
     //atributes
     Comparator<OptimizerSolution> comparator = new PathWeightComparator();
-    PriorityQueue<OptimizerSolution> Best_paths = new PriorityQueue<OptimizerSolution>(0, comparator);
-    private ArrayList<Pheromone> pheromones;
-    private ArrayList<Ant> colony;
+    PriorityQueue<OptimizerSolution> Best_paths = new PriorityQueue<OptimizerSolution>(comparator);
+    private ArrayList<Pheromone> pheromones = new ArrayList<Pheromone>();
+    private ArrayList<Ant> colony = new ArrayList<Ant>();
     Sim Simulation;
     Graph graph;
     ReadFile file;
     private int colony_size;
     private int nest;
-    private float gama;
-    private float rho;
-    private float eta;
+    private float gama; //lay pheromones parameters
+    private float rho; //evaporate pheromones parameter
+    private float eta; //calculate next evaporation time parameter
 
     //metodos
     public OptimizerACO(ReadFile file, Graph graph){
@@ -32,15 +31,13 @@ public class OptimizerACO{
         this.nest = file.getNest();
         this.graph = graph;
         this.file = file;
+        
+        gama=file.getGama();
+        rho=file.getRho();
+        eta=file.getEta();
 
         //init pheromones (rever metodo)
-        /*ALTERAR DPS
-        * ALTERAR DPS
-        * ALTERAR DPS
-        * ALTERAR DPS
-        * ALTERAR DPS
-        * ALTERAR DPS
-        * */
+
         for (int i = 1; i <= file.getNodes(); i++) {
             for(int j = i; j <= file.getNodes(); j++) {
                 if(i != j) {
@@ -51,16 +48,11 @@ public class OptimizerACO{
                 }
             }
         }
-
-        /*
-        Ant ant = new Ant(1,1, 1, 3,graph,this);
-        int next;
-        next = ant.move(file.getNest());
-        next = ant.move(next);
-        next = ant.move(next);
-        next = ant.move(next);
-        next = ant.move(next);
-        */
+        
+//        System.out.println("edges:" );
+//        for (Pheromone edge : pheromones) {
+//        	System.out.println("level: " + edge.get_ph());
+//        }
 
         //init colony
         for (int i = 1; i <= file.getColony_size(); i++){
@@ -68,100 +60,111 @@ public class OptimizerACO{
             colony.add(ant);
         }
     }
-    public float update() {
-        get_edge(i, j);
-        update_pheromones(0, edge);
-        return calcTime();
-    }
-
-
     public float calcTime(){
+        float mean = eta;
         Random random = new Random();
-        return (float) (-this.eta * Math.log(1 - random.nextFloat()));
+        return (float) (-mean * Math.log(1 - random.nextFloat()));
     }
-
-
-    public void lay_pheromones(float path_sumw){
+    public void lay_pheromones(ArrayList<Integer> path, float path_sumw){
         float amount;
-        //action: 1 lay pheromones; 0 evaporate pheromones
-        //evaporation
-        amount = this.rho;
-        if(edge_.get_ph()==0){
-            edge_.evaporate(amount);
+        amount = gama * path_sumw / graph.getSumWeight();
+//      System. out. println("lay pheromones: amount = " + amount);
+        /*for(int i : path) {
+            System.out.print(i + "-");
         }
-
-    		/*for(Pheromone edge : pheromones) {
-    			if(edge.ph != 0) {h
-    				edge.evaporate(amount);
-    			}
-    		}*/
-
-
-        //lay pheromones
-        amount = delta * path_sumw / graph.getSumWeight();
-        for(Pheromone edge : pheromones) {
-            edge.add(amount);
+        System.out.println();*/
+        int node1, node2;
+        for(int k = 0;k < path.size()-1;k++){
+            node1 = path.get(k);
+            node2 = path.get(k + 1);
+            Pheromone edge = get_edge(node1,node2);
+            assert edge != null;
+            edge.addPH(amount);
         }
     }
 
 
-
-    private Pheromone get_edge(int i, int j) {
-        for (Pheromone edge : pheromones) {
-            if(edge.is_edge(i, j) == 1) {
-                return edge;
-            }
-        }
-        return;
-    }
-
-    public void ProcessPath (ArrayList path) {
+    public void ProcessPath (ArrayList<Integer> path) {
         float path_sumw = 0;
-
+//        System. out. println("ProcessPath");
         //sum weights in path
-        Iterator<OptimizerSolution> itr = path.iterator();
-        while (itr.hasNext()) {
-            int x = (Integer)itr.next();
-            path_sumw += graph.getWeight(itr, x);
+;       for (int i=0; i<path.size()-1; i++) {
+            path_sumw += graph.getWeight(path.get(i), path.get(i+1));
         }
-        this.update_pheromones(1, path_sum);
+//		System. out. println("path_sumw: " + path_sumw);
+		
+        this.lay_pheromones(path, path_sumw);
+        
+        for(int i=0; i<path.size()-1; i++) {
+        	Pheromone edge = get_edge(path.get(i), path.get(i+1));
+        	Simulation.insert_evaporation_event(edge, calcTime());
+        }
 
         //compare with stored solutions
         //check if its better than any one
         if(Best_paths.size() < 6) {
             OptimizerSolution new_candidate = new OptimizerSolution(path, path_sumw);
             Best_paths.add(new_candidate);
-            break;
+
         }
         else {
             for(OptimizerSolution p : Best_paths) {
 //    			OptimizerSolution aux = peek(p);
-                if(path_sumw < p.wsum) {
+                if(path_sumw < p.get_wsum()) {
                     OptimizerSolution new_candidate = new OptimizerSolution(path, path_sumw);
                     Best_paths.add(new_candidate);
-                    Lists list_manipulation = new Lists();
-                    Best_paths = list_manipulation.remove_tail<ArrayList>(Best_paths);
+                    Best_paths = remove_tail(Best_paths);
                     break;
                 }
             }
         }
-
     }
 
 
-
+	public PriorityQueue<OptimizerSolution> remove_tail(PriorityQueue<OptimizerSolution> queue) {
+		//ver como criar para tipo generico
+		int counter = 0;
+		Iterator<OptimizerSolution> itr = queue.iterator();
+	    while (itr.hasNext()){
+	//  	OptimizerSolution temp = itr.next();
+	//    	counter++;
+	//	   	if (counter == queue.size()) {
+	//	       queue.remove(temp);
+	//	    }
+//	    	itr = itr.next();
+	    }
+	    queue.remove(itr.next());
+	    return queue;
+	}
 
     public PriorityQueue<OptimizerSolution> get_Best_paths(){
         return Best_paths;
     }
 
+    private Pheromone get_edge(int i, int j) {
+        for (Pheromone edge : pheromones) {
+            if(edge.is_edge(i, j)) {
+                return edge;
+            }
+        }
+        return null;
+    }
+    
+    
     public float get_pheromone(int i, int j) {
         return get_edge(i, j).get_ph();
     }
+
+    
+    
     public int get_n_edges() {
         return graph.getEdges();
     }
 
+    public int getNodes() {
+    	return this.file.getNodes();
+    }
+    
     public int get_colony_size() {
         return this.colony_size;
     }
@@ -170,32 +173,25 @@ public class OptimizerACO{
         return this.nest;
     }
 
+    public float get_rho() {
+    	return this.rho;
+    }
+    
 
-    public int getNodes() {
-        return this.file.getNodes();
+    //
+    public ArrayList<Pheromone> get_pheromones(){
+    	return pheromones;
     }
 
-
-    public Ant get_ant(int a){
+    public Ant get_ant(int id){
         for (Ant ant : colony) {
-            if(ant.getAntID() == a) return ant;
+            if(ant.getAntID() == id) return ant;
         }
         return null;
     }
-
-    public PriorityQueue<OptimizerSolution> remove_tail(PriorityQueue<OptimizerSolution> queue) {
-//		int counter = 0;
-        Iterator<OptimizerSolution> itr = queue.iterator();
-        while (itr.hasNext()) {
-//          	OptimizerSolution temp = itr.next();
-//        	counter++;
-//    	   	if (counter == queue.size()) {
-//    	       queue.remove(temp);
-//    	    }
-//        	itr = itr.next();
-        }
-        queue.remove(itr.next());
-        return queue;
+    
+    public void setSim(Sim sim) {
+    	this.Simulation = sim;
     }
 }
 

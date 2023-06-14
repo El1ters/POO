@@ -7,8 +7,9 @@ public abstract class Event{
     private float time_stamp;
 
     //metodos
-    public Event (int ts, Sim sim){
+    public Event (float ts, Sim sim){
         time_stamp = ts;
+        this.sim = sim;
 //    	this.update = update;
     }
 
@@ -19,7 +20,7 @@ public abstract class Event{
         return time_stamp;
     }
 
-    public void update_time_stamp(int ts) {
+    public void update_time_stamp(float ts) {
         this.time_stamp=ts;
         return;
     }

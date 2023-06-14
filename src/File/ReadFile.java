@@ -17,6 +17,7 @@ public class ReadFile {
     private float ee2;  //ρ
     private float gama; //γ
     private int colony_size; //ν
+    private Float final_instant; //τ
     private int[][] matrix;
     private ReadFile(){
 
@@ -27,7 +28,6 @@ public class ReadFile {
         }
         return instance;
     }
-    private Float final_instant; //τ
     //Construtor para gerar a matriz random
     public void setData(String[] args){
         this.n_nodes = Integer.parseInt(args[0]);
@@ -156,6 +156,11 @@ public class ReadFile {
             }
         }
     }
+    
+    public float getFinalInstant() {
+    	return final_instant;
+    }
+    
     public int getNodes(){
         return this.n_nodes;
     }
@@ -171,9 +176,19 @@ public class ReadFile {
     public float getBeta(){
         return  this.beta;
     }
-    public float getDelta(){
-        return  this.delta;
+    public float getGama(){
+        return  this.gama;
     }
+    public float getDelta(){
+    	return  this.delta;
+    }
+    public float getEta(){
+    	return  this.ee1;
+    }
+    public float getRho(){
+        return  this.ee2;
+    }
+
     public int[][] getMatrix(){
         return this.matrix;
     }

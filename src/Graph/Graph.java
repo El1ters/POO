@@ -3,9 +3,7 @@ import java.util.List;
 
 public abstract class Graph{
     protected int n_nodes;
-
     protected int n_edges = 0;
-
     protected int max_weight = 0;
 
     public Graph(int n_nodes){
