@@ -131,7 +131,9 @@ public class Ant {
         }
         return ci;
     }
-    private void printCijk(){ //Dar print dos Cijk associados aos caminhos
+    
+    //Dar print dos Cijk associados aos caminhos
+    private void printCijk(){
         boolean isFirst;
         for(float[] k : this.J) {
             isFirst = true;
@@ -142,12 +144,16 @@ public class Ant {
             }
         }
     }
+    
+    //Dar print do caminho percorrido
     private void printPath(){
         for(int i : this.curr_path)
             System.out.print(i+"-");
         System.out.println();
     }
-    private void printP(List<float[]> P){ //Dar print das prob comulativas
+    
+    //Dar print das prob comulativas
+    private void printP(List<float[]> P){ 
         boolean isFirst;
         for(float[] k : P) {
             isFirst = true;
