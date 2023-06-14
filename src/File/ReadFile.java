@@ -9,7 +9,7 @@ import java.util.Random;
  ReadFile:
  Classe que executa a leitura do ficherio de entrada
  Inicializa os parametros associados ao ficheiro e atribui-lhes um valor através da leitura do ficheiro de input ou dos parâmetros da linha de comandos
- Cria a matriz 'matrix' que representa o grafo e, caso desejado, a lista 'list'
+ Cria a matriz 'matrix' que representa o grafo
  ----------------------------------------------------------------------------------------------------------*/
 public class ReadFile {
     private static ReadFile instance;
