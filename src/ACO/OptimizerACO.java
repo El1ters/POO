@@ -71,10 +71,11 @@ public class OptimizerACO{
         }
         System.out.println();*/
         int node1, node2;
-        for(int k = 0;k < path.size()-1;k++){
+        System.out.println(path);
+        for(int k = 0;k < path.size() - 1;k++){
             node1 = path.get(k);
             node2 = path.get(k + 1);
-            Pheromone edge = get_edge(node1,node2);
+            Pheromone edge = get_edge(node1, node2);
             assert edge != null;
             edge.addPH(amount);
         }
@@ -91,17 +92,21 @@ public class OptimizerACO{
         this.lay_pheromones(path, path_sumw);
         
         for(int i = 0; i<path.size()-1; i++) {
-        	Pheromone edge = get_edge(path.get(i), path.get(i+1));
+        	Pheromone edge = get_edge(path.get(i), path.get(i + 1));
         	Simulation.insert_evaporation_event(edge, calcTime());
         }
-
+        for(Pheromone i: pheromones){
+            System.out.print(i.get_ph()+" ");
+        }
+        System.out.println();
         //compare with stored solutions
         //check if its better than any one
         if(Best_paths.size() < 6) {
             ArrayList<Integer> path_copy = new ArrayList<>(path);
-            OptimizerSolution new_candidate = new OptimizerSolution(path_copy, path_sumw);
-            Best_paths.add(new_candidate);
-
+            if(isNewPath(path_copy)) {
+                OptimizerSolution new_candidate = new OptimizerSolution(path_copy, path_sumw);
+                Best_paths.add(new_candidate);
+            }
         }
         /*else {
             for(OptimizerSolution p : Best_paths) {
@@ -124,7 +129,7 @@ public class OptimizerACO{
         }
         return true;
     }
-    public PriorityQueue<OptimizerSolution> remove_tail(PriorityQueue<OptimizerSolution> queue) {
+	public PriorityQueue<OptimizerSolution> remove_tail(PriorityQueue<OptimizerSolution> queue) {
 		//ver como criar para tipo generico
 		int counter = 0;
 		Iterator<OptimizerSolution> itr = queue.iterator();
@@ -171,8 +176,6 @@ public class OptimizerACO{
         return get_edge(i, j).get_ph();
     }
 
-    
-    
     public int get_n_edges() {
         return graph.getEdges();
     }
@@ -192,7 +195,6 @@ public class OptimizerACO{
     public float get_rho() {
     	return this.rho;
     }
-    
 
     //
     public ArrayList<Pheromone> get_pheromones(){
@@ -210,8 +212,6 @@ public class OptimizerACO{
     	this.Simulation = sim;
     }
 }
-
-
 
 //
 //public class Lists {

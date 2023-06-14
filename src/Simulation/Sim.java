@@ -119,13 +119,14 @@ public class Sim {
         System. out. println("\tTop candidate cycles: ");
 
         PriorityQueue<OptimizerSolution> cycles = ACO_.get_Best_paths();
+        PriorityQueue<OptimizerSolution> copiedQueue = new PriorityQueue<>(cycles);
         if(cycles.size() == 0) {
             System. out. println("\tBest Hamiltonian cycle: {}");
         }
         else {
-            OptimizerSolution best = cycles.remove();
-            while(cycles.size() != 0){
-                OptimizerSolution aux = cycles.remove();
+            OptimizerSolution best = copiedQueue.remove();
+            while(copiedQueue.size() != 0){
+                OptimizerSolution aux = copiedQueue.remove();
                 System. out. println("\t" + aux.get_path().toString()
                         .replace("[", "{")
                         .replace("]", "}")
