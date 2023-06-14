@@ -1,10 +1,7 @@
 package ACO;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.PriorityQueue;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
+
 import File.ReadFile;
 import Graph.Graph;
 import Simulation.Sim;
@@ -32,9 +29,9 @@ public class OptimizerACO{
         this.graph = graph;
         this.file = file;
         
-        gama=file.getGama();
-        rho=file.getRho();
-        eta=file.getEta();
+        gama = file.getGama();
+        rho = file.getRho();
+        eta = file.getEta();
 
         //init pheromones (rever metodo)
 
@@ -82,12 +79,10 @@ public class OptimizerACO{
             edge.addPH(amount);
         }
     }
-
-
     public void ProcessPath (ArrayList<Integer> path) {
-        float path_sumw = 0;
 //        System. out. println("ProcessPath");
         //sum weights in path
+        float path_sumw = 0;
 ;       for (int i=0; i<path.size()-1; i++) {
             path_sumw += graph.getWeight(path.get(i), path.get(i+1));
         }
@@ -95,7 +90,7 @@ public class OptimizerACO{
 		
         this.lay_pheromones(path, path_sumw);
         
-        for(int i=0; i<path.size()-1; i++) {
+        for(int i = 0; i<path.size()-1; i++) {
         	Pheromone edge = get_edge(path.get(i), path.get(i+1));
         	Simulation.insert_evaporation_event(edge, calcTime());
         }
@@ -103,11 +98,12 @@ public class OptimizerACO{
         //compare with stored solutions
         //check if its better than any one
         if(Best_paths.size() < 6) {
-            OptimizerSolution new_candidate = new OptimizerSolution(path, path_sumw);
+            ArrayList<Integer> path_copy = new ArrayList<>(path);
+            OptimizerSolution new_candidate = new OptimizerSolution(path_copy, path_sumw);
             Best_paths.add(new_candidate);
 
         }
-        else {
+        /*else {
             for(OptimizerSolution p : Best_paths) {
 //    			OptimizerSolution aux = peek(p);
                 if(path_sumw < p.get_wsum()) {
@@ -117,15 +113,14 @@ public class OptimizerACO{
                     break;
                 }
             }
-        }
+        }*/
     }
-
-
 	public PriorityQueue<OptimizerSolution> remove_tail(PriorityQueue<OptimizerSolution> queue) {
 		//ver como criar para tipo generico
 		int counter = 0;
 		Iterator<OptimizerSolution> itr = queue.iterator();
 	    while (itr.hasNext()){
+            System.out.print("a");
 	//  	OptimizerSolution temp = itr.next();
 	//    	counter++;
 	//	   	if (counter == queue.size()) {
@@ -136,6 +131,18 @@ public class OptimizerACO{
 	    queue.remove(itr.next());
 	    return queue;
 	}
+
+    /*public static <T> PriorityQueue<T> remove_tail(PriorityQueue<T> queue){
+        Iterator<T> iterator = queue.iterator();
+        T lastElement = null;
+        while (iterator.hasNext()) {
+            lastElement = iterator.next();
+        }
+        if (lastElement != null) {
+            queue.remove(lastElement);
+        }
+        return queue;
+    }*/
 
     public PriorityQueue<OptimizerSolution> get_Best_paths(){
         return Best_paths;

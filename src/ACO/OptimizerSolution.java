@@ -10,6 +10,10 @@ public class OptimizerSolution {
 
     public OptimizerSolution(ArrayList<Integer> path, float wsum) {
         this.path = path;
+        for(int i:path)
+            System.out.print(i + "-");
+        System.out.println();
+        System.out.println(wsum);
         this.wsum = wsum;
     }
 
