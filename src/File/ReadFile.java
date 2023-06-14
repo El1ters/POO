@@ -5,6 +5,12 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Random;
 
+/* ---------------------------------------------------------------------------------------------------------
+ ReadFile:
+ Classe que executa a leitura do ficherio de entrada
+ Inicializa os parametros associados ao ficheiro e atribui-lhes um valor através da leitura do ficheiro de input ou dos parâmetros da linha de comandos
+ Cria a matriz 'matrix' que representa o grafo e, caso desejado, a lista 'list'
+ ----------------------------------------------------------------------------------------------------------*/
 public class ReadFile {
     private static ReadFile instance;
     private int n_nodes; //Quantidade de nós existente
@@ -28,7 +34,7 @@ public class ReadFile {
         }
         return instance;
     }
-    //Construtor para gerar a matriz random
+    //Construtor para gerar matriz random através dos parametros de input na linha de comandos
     public void setData(String[] args){
         this.n_nodes = Integer.parseInt(args[0]);
         this.weight = Integer.parseInt(args[1]);
@@ -57,7 +63,8 @@ public class ReadFile {
         sampleEdgesLeft(edges_left,this.weight);
         System.out.println("max: " + max + " min: " + n_nodes + " " + "n_edges: " +  n_edges);
     }
-    //construtor para gerar a matriz pelo ficheiro
+    
+    //Construtor para gerar a matriz com os dados provenientes do ficheiro de input
     public void setData(String file){
         try {
             File myObj = new File(file);
@@ -88,11 +95,14 @@ public class ReadFile {
             }
             this.matrix = matrix;
             myReader.close();
-        } catch (FileNotFoundException e) {
+        } 
+        /* Caso nao seja encontrado um ficheiro, apresentar mensagem de erro */
+        catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
+    /* Dado um determinado ciclo (array de inteiros), da print dos valores de cada posição */
     private void printCycle(int [] cycle){
         for (int j = 0 ; j < cycle.length;j++) {
             System.out.print(cycle[j]);
@@ -101,22 +111,30 @@ public class ReadFile {
         }
         System.out.println();
     }
+    
+    //Dar shuffle do vetor de nós
     private void shuffleNodes(int[] vec){
         // Shuffle the array
         Random random = new Random();
+        //O vetor é percorrido desde a sua última posição até à segunda e é escolhido um índice aleatório, j
         for (int i = vec.length - 1; i > 0; i--) {
             int j = random.nextInt(i + 1);
-
             int temp = vec[i];
+            //Os valores da posição i e j do array 'vec' são trocados
             vec[i] = vec[j];
             vec[j] = temp;
         }
     }
+
+    /* Método que gera o caminho de Hamilton na forma de uma matrix de adjacencias */
     private int[][] createHamiltonianPath(int[] vec,int maxWeight){
+        //Criar a matrix e objeto Random para gerar pesos aleatórios
         int[][] matrix = new int[vec.length][vec.length];
         Random random = new Random();
+        //Ir buscar o primeiro e último valor do vetor
         int first = vec[0];
         int last = vec[vec.length - 1];
+        //Gerar um peso entre 1 e o máximo peso possível
         int weight = random.nextInt(maxWeight) + 1;
         matrix[first - 1][last - 1] = weight;
         matrix[last - 1][first - 1] = weight;
