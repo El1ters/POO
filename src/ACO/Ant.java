@@ -10,8 +10,8 @@ public class Ant {
     Graph graph;
     OptimizerACO aco;
     private int ID;
-    private List<Integer> curr_path = new ArrayList<>();
-    private List<float[]> J;
+    private List<Integer> curr_path = new ArrayList<>();    //Caminho atual da formiga
+    private List<float[]> J;    //Lista do nível de feromonas
     private float alpha;
     private float beta;
     private float delta;
@@ -22,15 +22,17 @@ public class Ant {
         this.delta = d;
         this.graph = graph;
         this.aco = aco;
-        this.curr_path.add(aco.getNest());
+        this.curr_path.add(aco.getNest());  //Considerar 'nest' o ponto inicial do caminho da formiga
         this.J = new ArrayList<>();
     }
     private void move(){
+        //Ir buscar o nó atual
         int curr_node = curr_path.get(curr_path.size() - 1);
-        //Lista dos vizinhos
+        //Obter lista dos vizinhos do nó atual
         List<Integer> neighbour = graph.getNeighbours(curr_node);
         float ci;
-        ci = getJ(neighbour,curr_node);//primeiro elemento é o no destino e o segundo é o Cijk
+        //Calcular a influência da feromona - primeiro elemento é o no destino e o segundo é o Cijk
+        ci = getJ(neighbour,curr_node);
         //System.out.println("Ci:" + ci);
         //printCijk();
         if(ci == 0){
@@ -39,13 +41,17 @@ public class Ant {
             System.out.println("escolhido: " + next);
             this.curr_path.add(next);
         }else{
-            List<float[]> P = getP(ci);//primeiro elemento é o nó destino e o segundo é prob comulativa
+            List<float[]> P = getP(ci); //primeiro elemento é o nó destino e o segundo é prob comulativa
             //printP(P);
+            //Escolher, aleatoriamente, o nó seguinte e adicioná-lo ao caminho da formiga
             int next = next_node(P);
             System.out.println("Escolhido: " + next);
             this.curr_path.add(next);
         }
     }
+    
+    /* Verifica se a formiga percorreu todos os nós e se regressou ao nó de origem
+    Caso o ciclo de Hamilton tenha sido detetado, retornar 1 */
     private int hamiltonDetection(){
         int nest = curr_path.get(curr_path.size() - 1);
         return (curr_path.size() == aco.getNodes() + 1 && nest == aco.getNest()) ? 1:0;
@@ -55,23 +61,31 @@ public class Ant {
         Random random = new Random();
         return (float) (-mean * Math.log(1 - random.nextFloat()));
     }
+    
+    //Método que atualiza o caminho percorrido pela formiga ao longo do mesmo
     private void updatePath(){
         int next = curr_path.get(curr_path.size() - 1);
         int first = curr_path.indexOf(next);
         int last = curr_path.lastIndexOf(next);
+        //Encontrar a primeira e última ocorrência no caminho considerado
         if (first != -1 && last != -1) {
-            curr_path.subList(first, last).clear();
+            curr_path.subList(first, last).clear(); //Remover nós entre a primeira e última ocorrência do nó
         }
     }
+    
+    //Método que indica qual o próximo nó no caminho
     private int next_node(List<float[]> P){
         Random random = new Random();
-        float prob = random.nextFloat();
+        float prob = random.nextFloat();    //Gerar um valor aleatório entre 0 e 1 - probabilidade
+        //Comparar a probabilidade com cada elemento da lista P, se a probabilidade for inferior, retornar o nó i[0]
         for(float[] i : P){
             if(prob < i[1])
                 return (int) i[0];
         }
         return 0;
     }
+    
+    //Método que seleciona um dos vizinhos do nó através de uma distribuição uniforme
     private int uniformDist(List<Integer> neighbour){
         Random random = new Random();
         //Escolher um indice random para percorrer a lista e escolher um
@@ -85,8 +99,10 @@ public class Ant {
         }
         return 0;
     }
+    
+    //Método calcula a probabilidade comulativa de seleção do nó seguinte com base nos níveis de feromonas
     private List<float[]> getP(float ci){
-        List<float[]> P = new ArrayList<>();
+        List<float[]> P = new ArrayList<>();    //Lista que armazena as probabilidade
         float ptotal,Pijk;
         float aux = 0;
         for(float[] i: J){
@@ -94,15 +110,18 @@ public class Ant {
             ptotal = i[1] / ci + aux;
             aux += i[1] / ci;
             //System.out.println("Pijk:"+Pijk);
+            //Adicinar o nó e a probabilidade `å lista
             P.add(new float[]{i[0],ptotal});
         }
         return P;
     }
+    
+    //Método que calcula o nível de feromonas de um nó de forma a ser possível escolher o nó seguinte
     private float getJ(List<Integer> neighbour,int curr_node){
         this.J.clear();
         float cijk;
         float ci = 0;
-        //Percorrer a lista ver se a formiga já passou por esse nó e adicionar à lista de nos nao percorridos
+        //Percorrer a lista para ver se a formiga já passou por esse nó e adicionar nós não percorridos
         for(Integer i : neighbour){
             if(!curr_path.contains(i)){
                 cijk = (this.alpha/*+get_pheromones()*/) / (this.beta + graph.getWeight(curr_node,i));
@@ -116,6 +135,7 @@ public class Ant {
         boolean isFirst;
         for(float[] k : this.J) {
             isFirst = true;
+            //Percorrer a lista ver se a formiga já passou por esse nó e adicionar à lista de nós não percorridos
             for (float value : k) {
                 System.out.println(isFirst ? "nó: " + value: "Cijk: " + value);
                 isFirst = false;
