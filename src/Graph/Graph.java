@@ -2,10 +2,11 @@ package Graph;
 import java.util.List;
 
 public abstract class Graph{
-    protected int n_nodes;
-    protected int n_edges = 0;
-    protected int max_weight = 0;
+    protected int n_nodes;    //Número de nós no grafo
+    protected int n_edges = 0;    //Número de arestas
+    protected int max_weight = 0;    //Peso máximo das arestas
 
+    //Contrutor
     public Graph(int n_nodes){
         this.n_nodes = n_nodes;
     }
