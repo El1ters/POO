@@ -88,37 +88,37 @@ public class OptimizerACO{
             path_sumw += graph.getWeight(path.get(i), path.get(i+1));
         }
 //		System. out. println("path_sumw: " + path_sumw);
-		
+
+        ArrayList<Integer> path_copy = new ArrayList<>(path);
         this.lay_pheromones(path, path_sumw);
         
         for(int i = 0; i<path.size()-1; i++) {
         	Pheromone edge = get_edge(path.get(i), path.get(i + 1));
         	Simulation.insert_evaporation_event(edge, calcTime());
         }
-        /*for(Pheromone i: pheromones){
-            System.out.print(i.get_ph()+" ");
-        }
-        System.out.println();*/
         //compare with stored solutions
         //check if its better than any one
         if(Best_paths.size() < 6) {
-            ArrayList<Integer> path_copy = new ArrayList<>(path);
             if(isNewPath(path_copy)) {
                 OptimizerSolution new_candidate = new OptimizerSolution(path_copy, path_sumw);
                 Best_paths.add(new_candidate);
             }
         }
-        /*else {
+        else {
             for(OptimizerSolution p : Best_paths) {
 //    			OptimizerSolution aux = peek(p);
                 if(path_sumw < p.get_wsum()) {
-                    OptimizerSolution new_candidate = new OptimizerSolution(path, path_sumw);
-                    Best_paths.add(new_candidate);
-                    Best_paths = remove_tail(Best_paths);
+                    if(isNewPath(p.get_path())) {
+//                		System. out. println("\tshorter path found -> insert");
+                        OptimizerSolution new_candidate = new OptimizerSolution(path_copy, path_sumw);
+                        Best_paths.add(new_candidate);
+                        Best_paths = remove_tail(Best_paths);
+                    }
+//                    System. out. println("\ttail removed");
                     break;
                 }
             }
-        }*/
+        }
     }
     private boolean isNewPath(ArrayList<Integer> path){
         for(OptimizerSolution i:Best_paths){
@@ -129,35 +129,27 @@ public class OptimizerACO{
         }
         return true;
     }
-	public PriorityQueue<OptimizerSolution> remove_tail(PriorityQueue<OptimizerSolution> queue) {
-		//ver como criar para tipo generico
-		int counter = 0;
-		Iterator<OptimizerSolution> itr = queue.iterator();
-	    while (itr.hasNext()){
-            System.out.print("a");
-	//  	OptimizerSolution temp = itr.next();
-	//    	counter++;
-	//	   	if (counter == queue.size()) {
-	//	       queue.remove(temp);
-	//	    }
-//	    	itr = itr.next();
-	    }
-	    queue.remove(itr.next());
-	    return queue;
-	}
+    public PriorityQueue<OptimizerSolution> remove_tail(PriorityQueue<OptimizerSolution> queue) {
+        PriorityQueue<OptimizerSolution> copy = new PriorityQueue<>(queue);
+        //corre a copia da lista a procurar o maior
+        OptimizerSolution ref = copy.remove();
+        while(!copy.isEmpty()) {
+            OptimizerSolution obj = copy.remove();
+            if(obj.get_wsum() >= ref.get_wsum()) {
+                obj = ref;
+            }
+        }
+        queue.remove(ref);
 
-    /*public static <T> PriorityQueue<T> remove_tail(PriorityQueue<T> queue){
-        Iterator<T> iterator = queue.iterator();
-        T lastElement = null;
-        while (iterator.hasNext()) {
-            lastElement = iterator.next();
-        }
-        if (lastElement != null) {
-            queue.remove(lastElement);
-        }
+        //		//reverse copy
+//		PriorityQueue<OptimizerSolution> rev_queue = new PriorityQueue<>(queue);
+//
+//
+//
+//		OptimizerSolution obj = rev_queue.peek();
+//		queue.remove(obj);
         return queue;
-    }*/
-
+    }
     public PriorityQueue<OptimizerSolution> get_Best_paths(){
         return Best_paths;
     }
@@ -170,8 +162,6 @@ public class OptimizerACO{
         }
         return null;
     }
-    
-    
     public float get_pheromone(int i, int j) {
         return get_edge(i, j).get_ph();
     }

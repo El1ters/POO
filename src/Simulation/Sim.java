@@ -68,9 +68,6 @@ public class Sim {
             }
         }
     }
-
-
-
     public void RunSim(){
         float observation_period = final_instant/20;
         float observation_instant = observation_period;
@@ -108,14 +105,10 @@ public class Sim {
                 aux.update_time_stamp(new_ts);
                 PEC.add(aux);
             }
-            for(Event i: PEC)
-                System.out.print(i.get_time_stamp()+ " ");
-            System.out.println();
         }
     }
 
     private void print_observations(float observation_instant) {
-
         System. out. println("\n\nObservation " + observation_number + ":");
         System. out. println("\tPresent instant: " + /*instant*/ observation_instant);
         System. out. println("\tNumber of move events: " + mevents);
@@ -155,6 +148,7 @@ public class Sim {
 
 }
 
+//💀💀💀💀
 class EventTimeComparator implements Comparator<Event> {
     public int compare(Event a, Event b)
     {

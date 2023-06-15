@@ -5,11 +5,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Random;
 
-/** ---------------------------------------------------------------------------------------------------------
- * ReadFile:
- * Classe que executa a leitura do ficherio de entrada
- * Inicializa os parametros associados ao ficheiro e atribui-lhes um valor através da leitura do ficheiro de input ou dos parâmetros da linha de comandos
- * Cria a matriz 'matrix' que representa o grafo
+/* ---------------------------------------------------------------------------------------------------------
+ ReadFile:
+ Classe que executa a leitura do ficherio de entrada
+ Inicializa os parametros associados ao ficheiro e atribui-lhes um valor através da leitura do ficheiro de input ou dos parâmetros da linha de comandos
+ Cria a matriz 'matrix' que representa o grafo
  ----------------------------------------------------------------------------------------------------------*/
 public class ReadFile {
     private static ReadFile instance;
@@ -96,13 +96,13 @@ public class ReadFile {
             this.matrix = matrix;
             myReader.close();
         } 
-        // Caso nao seja encontrado um ficheiro, apresentar mensagem de erro
+        /* Caso nao seja encontrado um ficheiro, apresentar mensagem de erro */
         catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
-    // Dado um determinado ciclo (array de inteiros), da print dos valores de cada posição
+    /* Dado um determinado ciclo (array de inteiros), da print dos valores de cada posição */
     private void printCycle(int [] cycle){
         for (int j = 0 ; j < cycle.length;j++) {
             System.out.print(cycle[j]);
@@ -126,7 +126,7 @@ public class ReadFile {
         }
     }
 
-    // Método que gera o caminho de Hamilton na forma de uma matrix de adjacencias
+    /* Método que gera o caminho de Hamilton na forma de uma matrix de adjacencias */
     private int[][] createHamiltonianPath(int[] vec,int maxWeight){
         //Criar a matrix e objeto Random para gerar pesos aleatórios
         int[][] matrix = new int[vec.length][vec.length];
