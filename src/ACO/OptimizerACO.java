@@ -234,7 +234,13 @@ public class OptimizerACO{
 
 class PathWeightComparator implements Comparator<OptimizerSolution> {
     public int compare(OptimizerSolution a, OptimizerSolution b) {
-        float dif = a.get_wsum() - b.get_wsum();
-        return (int)dif;
+        if ((a.get_wsum() - b.get_wsum()) < 0){
+            return -1;
+        }
+        if ((a.get_wsum() - b.get_wsum()) > 0){
+            return 1;
+        }
+        else
+            return 0;
     }
 }
