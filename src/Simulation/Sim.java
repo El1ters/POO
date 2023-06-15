@@ -61,7 +61,7 @@ public class Sim {
                 event_standby.remove(evap_event);
                 //update time = this.instant + new_time
                 float new_ts = this.instant + add_time;
-                ((Event)evap_event).update_time_stamp(new_ts);
+                evap_event.update_time_stamp(new_ts);
                 //insert in PEC
                 PEC.add(evap_event);
                 break;
