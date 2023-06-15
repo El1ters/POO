@@ -102,7 +102,7 @@ public class ReadFile {
             e.printStackTrace();
         }
     }
-    /* Dado um determinado ciclo (array de inteiros), da print dos valores de cada posição */
+    // Dado um determinado ciclo (array de inteiros), da print dos valores de cada posição
     private void printCycle(int [] cycle){
         for (int j = 0 ; j < cycle.length;j++) {
             System.out.print(cycle[j]);
