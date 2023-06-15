@@ -22,6 +22,5 @@ public abstract class Event{
 
     public void update_time_stamp(float ts) {
         this.time_stamp=ts;
-        return;
     }
 }

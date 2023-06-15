@@ -208,9 +208,24 @@ public class ReadFile {
     public float getRho(){
         return  this.ee2;
     }
-
     public int[][] getMatrix(){
         return this.matrix;
+    }
+
+    public void printInputParam(){
+        System.out.println("Input Parameters:");
+        System.out.println("\t"+ n_nodes + " " + ":" + " number of nodes in the graph");
+        System.out.println("\t"+ nest + " " + ":" + " the nest node");
+        System.out.println("\t"+ alpha + " " + ":" + " alpha, ant move event");
+        System.out.println("\t"+ beta + " " + ":" + " beta, ant move event");
+        System.out.println("\t"+ delta + " " + ":" + " delta, ant move event");
+        System.out.println("\t"+ ee1 + " " + ":" + " eta, pheromone evaporation event");
+        System.out.println("\t"+ ee2 + " " + ":" + " rho, pheromone evaporation event");
+        System.out.println("\t" + gama + " "+ ":" + " pheromone level");
+        System.out.println("\t" + colony_size + " " + ":" + " ant colony size");
+        System.out.println("\t" + final_instant + " " + ":" + " final instant");
+        System.out.println();
+
     }
 }
 

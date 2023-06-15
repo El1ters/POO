@@ -71,7 +71,7 @@ public class OptimizerACO{
         }
         System.out.println();*/
         int node1, node2;
-        System.out.println(path);
+        //System.out.println(path);
         for(int k = 0;k < path.size() - 1;k++){
             node1 = path.get(k);
             node2 = path.get(k + 1);
@@ -95,10 +95,10 @@ public class OptimizerACO{
         	Pheromone edge = get_edge(path.get(i), path.get(i + 1));
         	Simulation.insert_evaporation_event(edge, calcTime());
         }
-        for(Pheromone i: pheromones){
+        /*for(Pheromone i: pheromones){
             System.out.print(i.get_ph()+" ");
         }
-        System.out.println();
+        System.out.println();*/
         //compare with stored solutions
         //check if its better than any one
         if(Best_paths.size() < 6) {

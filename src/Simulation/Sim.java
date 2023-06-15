@@ -89,7 +89,8 @@ public class Sim {
 //        	System. out. println("Event pop -> time_stamp: " + aux.get_time_stamp());
 //            System. out. println("Number of move events: " + mevents);
 //            System. out. println("Number of evaporation events: " + eevents);
-            instant = aux.get_time_stamp(); //atualizar o instant antes ou depois de verificar o observation instant (ver caderno)?
+            //atualizar o instant antes ou depois de verificar o observation instant (ver caderno)?
+            instant = aux.get_time_stamp();
             //se o evento que se vai executar passar o observation_instant, interromper e
             //imprimir imediatamente o estado atual antes continuar a simulação
 
@@ -107,6 +108,9 @@ public class Sim {
                 aux.update_time_stamp(new_ts);
                 PEC.add(aux);
             }
+            for(Event i: PEC)
+                System.out.print(i.get_time_stamp()+ " ");
+            System.out.println();
         }
     }
 
@@ -154,7 +158,14 @@ public class Sim {
 class EventTimeComparator implements Comparator<Event> {
     public int compare(Event a, Event b)
     {
-        float dif = a.get_time_stamp() - b.get_time_stamp();
-        return (int)dif;
+        if ((a.get_time_stamp() - b.get_time_stamp()) < 0){
+            return -1;
+        }
+        if ((a.get_time_stamp() - b.get_time_stamp()) > 0){
+            return 1;
+        }
+        else
+            return 0;
+
     }
 }
