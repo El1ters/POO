@@ -96,7 +96,7 @@ public class ReadFile {
             this.matrix = matrix;
             myReader.close();
         } 
-        /* Caso nao seja encontrado um ficheiro, apresentar mensagem de erro */
+        // Caso nao seja encontrado um ficheiro, apresentar mensagem de erro
         catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -126,7 +126,7 @@ public class ReadFile {
         }
     }
 
-    /* Método que gera o caminho de Hamilton na forma de uma matrix de adjacencias */
+    // Método que gera o caminho de Hamilton na forma de uma matrix de adjacencias
     private int[][] createHamiltonianPath(int[] vec,int maxWeight){
         //Criar a matrix e objeto Random para gerar pesos aleatórios
         int[][] matrix = new int[vec.length][vec.length];
