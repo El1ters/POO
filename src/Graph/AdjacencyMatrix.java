@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Random;
 import File.ReadFile;
 
-/* ---------------------------------------------------------------------------------------------------------
- AdjacencyMatrix:
- Classe que extende a classe 'Graph'
- Implementação de um grafo em forma de matriz de adjacências que possui métodos que permitem alteração das propriedades da matriz
+/** ---------------------------------------------------------------------------------------------------------
+ * AdjacencyMatrix:
+ * Classe que extende a classe 'Graph'
+ * Implementação de um grafo em forma de matriz de adjacências que possui métodos que permitem alteração das propriedades da matriz
  ----------------------------------------------------------------------------------------------------------*/
 public class AdjacencyMatrix extends Graph{
     private final int[][] matrix;
